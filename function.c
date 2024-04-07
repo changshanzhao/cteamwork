@@ -1128,6 +1128,8 @@ AcademicPaper* createAcademicPaper() {
     newPaper->journalLevel = 0; // 默认期刊级别初始化为0
     calculateJournalLevel(newPaper); // 计算期刊级别
     newPaper->gpa = calculatePaperGPA(newPaper);
+
+    newPaper->next = NULL; //后继指针初始化为NULL
     // 返回新创建的AcademicPaper指针
     return newPaper;
 }
@@ -1168,6 +1170,9 @@ Competition* createCompetition() {
         scanf("%c", &newCompetition->competitionType);
     }
     newCompetition->gpa = calculateCompetitionGPA(newCompetition);
+
+    newCompetition->next = NULL; //后继指针初始化为NULL
+
     // 返回新创建的Competition指针
     return newCompetition;
 }
