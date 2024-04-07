@@ -7,7 +7,6 @@
 #define MAX_PASSWORD_LENGTH 15
 #define STUDENT_ID_LENGTH 8
 #define MAX_CREDIT 8
-#pragma warning(disable:4996)
 // 特定字符串用于读取标记
 #define STUDENT_START "##StudentStart##"
 #define STUDENT_END "##StudentEnd##"
@@ -171,6 +170,32 @@ int isRankValid(int rank);//判断获奖等级是否合法
 int isLeaderOrSecondLeaderValid(int isLeaderOrSecondLeader);//判断是否为负责人是否合法
 void calculateJournalLevel(AcademicPaper* paper);//计算学术论文期刊级别
 
+// 主函数
+int main() {
+    loadFromFile();//从文件加载
+
+    if (adminsList == NULL) {
+        AdminInfo* admin = (AdminInfo*)malloc(sizeof(AdminInfo));
+        if (admin == NULL) {
+            // 如果内存分配失败，打印错误信息并退出程序
+            fprintf(stderr, "内存分配失败\n");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(admin->username, "admin");
+        strcpy(admin->password, "admin");
+        admin->next = NULL;
+        adminsList = admin;
+    }
+    // 初始化管理员信息,用户名和密码均为admin
+
+
+    loginSystem();// 进入系统
+    if (!isSaved)saveToFile();//保存到文件
+
+    freeMemory(&studentsList);//释放内存
+    freeAdminMemory(&adminsList);//释放内存
+    return 0;
+}
 
 // 登录系统
 void loginSystem() {
@@ -763,10 +788,6 @@ void insertInnovationProject(StudentInfo* student, InnovationProject* project) {
     if (current == NULL) {
         // 如果学生的项目链表为空，则新节点成为第一个节点
         student->innovationProjects = project;
-        printf("大学生创新创业项目录入成功");
-    }
-    else {
-        printf("已经存在大学生创新创业计划项目");
     }
 }
 
@@ -790,7 +811,6 @@ void insertAcademicPaper(StudentInfo* student, AcademicPaper* paper) {
         // 将新节点添加到链表的末尾
         current->next = paper;
     }
-    printf("论文录入成功");
 }
 
 // 插入计算机类学科竞赛
@@ -813,7 +833,6 @@ void insertCompetition(StudentInfo* student, Competition* competition) {
         // 将新节点添加到链表的末尾
         current->next = competition;
     }
-    printf("竞赛录入成功");
 }
 
 // 计算GPA、总学分、加权平均分、总绩点
@@ -1128,7 +1147,6 @@ AcademicPaper* createAcademicPaper() {
     newPaper->journalLevel = 0; // 默认期刊级别初始化为0
     calculateJournalLevel(newPaper); // 计算期刊级别
     newPaper->gpa = calculatePaperGPA(newPaper);
-
     newPaper->next = NULL; //后继指针初始化为NULL
     // 返回新创建的AcademicPaper指针
     return newPaper;
@@ -1170,9 +1188,7 @@ Competition* createCompetition() {
         scanf("%c", &newCompetition->competitionType);
     }
     newCompetition->gpa = calculateCompetitionGPA(newCompetition);
-
     newCompetition->next = NULL; //后继指针初始化为NULL
-
     // 返回新创建的Competition指针
     return newCompetition;
 }
@@ -1623,11 +1639,11 @@ void saveToFile() {
         fprintf(file, "AverageScore: %f\n", currentStudent->averageScore);// 加权平均分
         fprintf(file, "TotalGPA: %f\n", currentStudent->totalGPA);// 总绩点
 
-//        char courseName[MAX_NAME_LENGTH];
-//        float score;    // 分数
-//        float credit; // 学分
-//        float gpa; // 单门课程绩点
-        // 学业成绩链表
+        //        char courseName[MAX_NAME_LENGTH];
+        //        float score;    // 分数
+        //        float credit; // 学分
+        //        float gpa; // 单门课程绩点
+                // 学业成绩链表
         if (currentStudent->academicScores != NULL) {
             fprintf(file, "%s\n", SCORE_START);
             AcademicScoreNode* currentScore = currentStudent->academicScores;
@@ -1705,7 +1721,7 @@ void saveToFile() {
             fprintf(file, "%s\n", COMPETITION_END);
         }
 
-        // 学生记录结束
+        // 当前学生记录结束
         fprintf(file, "%s\n", STUDENT_END);
 
         currentStudent = currentStudent->next;
@@ -1793,12 +1809,12 @@ void loadFromFile() {
                 sscanf(buffer, "Credit: %2f", &newScore->credit);
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "GPA: %2f", &newScore->gpa);
-                newScore->next = newStudent->academicScores;
-                newStudent->academicScores = newScore;
+                insertAcademicScore(newStudent, newScore);
             }
 
+
             // 读取大学生创新创业计划项目链表
-            if (fgets(buffer, sizeof(buffer), file) && strncmp(buffer, PROJECT_START, strlen(PROJECT_START)) == 0) {
+            while (fgets(buffer, sizeof(buffer), file) && strncmp(buffer, PROJECT_END, strlen(PROJECT_END)) != 0) {
                 InnovationProject* newProject = (InnovationProject*)malloc(sizeof(InnovationProject));
                 if (newProject == NULL) {
                     handleInputError("内存分配失败");
@@ -1809,10 +1825,13 @@ void loadFromFile() {
 
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "ProjectName: %s", newProject->projectName);
+
                 fgets(buffer, sizeof(buffer), file);
-                sscanf(buffer, "GPA: %2f", &newProject->gpa);
+                sscanf(buffer, "GPA: %f", &newProject->gpa);
+
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "LeaderOrSecondLeader: %d", &newProject->isLeaderOrSecondLeader);
+
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "ProjectLevel: %s", newProject->projectLevel);
                 fgets(buffer, sizeof(buffer), file);
@@ -1829,16 +1848,20 @@ void loadFromFile() {
                 memset(newPaper, 0, sizeof(AcademicPaper));
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "Title: %s", newPaper->title);
+
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "JournalName: %s", newPaper->journalName);
+
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "IsFirstAuthor: %d", &newPaper->isFirstAuthor);
+
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "JournalLevel: %d", &newPaper->journalLevel);
+
                 fgets(buffer, sizeof(buffer), file);
-                sscanf(buffer, "GPA: %2f", &newPaper->gpa);
-                newPaper->next = newStudent->academicPapers;
-                newStudent->academicPapers = newPaper;
+                sscanf(buffer, "GPA: %f", &newPaper->gpa);
+
+                insertAcademicPaper(newStudent, newPaper);
             }
 
             // 读取计算机类学科竞赛链表
@@ -1860,9 +1883,9 @@ void loadFromFile() {
                 fgets(buffer, sizeof(buffer), file);
                 sscanf(buffer, "CompetitionType: %c", &newCompetition->competitionType);
                 fgets(buffer, sizeof(buffer), file);
-                sscanf(buffer, "GPA: %2f", &newCompetition->gpa);
-                newCompetition->next = newStudent->competitions;
-                newStudent->competitions = newCompetition;
+                sscanf(buffer, "GPA: %f", &newCompetition->gpa);
+
+                insertCompetition(newStudent, newCompetition);
             }
             // 跳过学生记录结束标记
             fgets(buffer, sizeof(buffer), file);
@@ -2090,7 +2113,7 @@ void displayCompetitions(StudentInfo* student) {
     }
     printf("计算机类学科竞赛：\n");
     while (current != NULL) {
-        printf("竞赛名称: %s, 参赛队伍人数: %d, 竞赛级别: %s, 获奖等级: %d, 竞赛类别: %s, 加分: %.2f\n", current->competitionName, current->teamSize, current->competitionLevel, current->rank, current->competitionType, current->gpa);
+        printf("竞赛名称: %s, 参赛队伍人数: %d, 竞赛级别: %s, 获奖等级: %d, 竞赛类别: %c, 加分: %.2f\n", current->competitionName, current->teamSize, current->competitionLevel, current->rank, current->competitionType, current->gpa);
         current = current->next;
     }
     printf("所有计算机类学科竞赛已全部显示完成。\n");
