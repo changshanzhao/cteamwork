@@ -1,6 +1,6 @@
 #include "Table.h"
 
-void tableInit(Table* t, Manager manager, int x, int y, int width, int height)
+void tableInit(Table* t, Manager* manager, int x, int y, int width, int height)
 {
 	t->manager = manager;
 	t->w.height = height;

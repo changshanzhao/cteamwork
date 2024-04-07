@@ -4,7 +4,6 @@
 #include "Button.h"
 #include "Manager.h"
 #include "Table.h"
-#include "function.h"
 #include <iostream>
 #include <algorithm>
 #define len 80 //字符长度
@@ -20,6 +19,7 @@ enum WindowState
     viewAdmins,
     editStudents,    // 编辑学生
     editAdmins,
+    cmd,
 };
 
 
@@ -32,6 +32,7 @@ struct Window
     Button* mainWindow_edit;
     Button* mainWindow_exit;
     Button* mainWindow_clear;
+    Button* mainWindow_cmd;
 
     // 查看学生窗口按钮
     Button* viewStudents_pageUp;
@@ -45,11 +46,13 @@ struct Window
     Button* editStudents_back;
     Button* editStudents_search;
 
+
+
     Widget wid;
 
     WindowState state;  // 窗口状态
     Table* table;       // 学生数据表格
-    Manager manager;    // 管理器
+    Manager* manager;    // 管理器
     HWND hWnd;          // 窗口句柄
     bool isEdit;        // 是否编辑学生
 };
@@ -65,3 +68,4 @@ void showEditAdmins(Window* w);
 void showEditStudents(Window* w);                    // 显示编辑学生窗口
 bool isNumber(Window* w, const std::wstring& string);  // 判断受否为数字
 void FirstPage();
+void showCmd();

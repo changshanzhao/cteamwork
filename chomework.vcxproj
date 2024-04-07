@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
-    <ClInclude Include="function.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="Table.h" />
@@ -29,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="function.cpp" />
+    <ClCompile Include="function.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Table.cpp" />
@@ -43,7 +42,9 @@
     <None Include="Students.dat" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="admin.txt" />
     <Text Include="admins.txt" />
+    <Text Include="student.txt" />
     <Text Include="students.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

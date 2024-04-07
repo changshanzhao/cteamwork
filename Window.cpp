@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <graphics.h>
+#include "function.c"
 
 void windowInit(Window* w,int width, int height)
 {
@@ -36,6 +37,8 @@ void windowInit(Window* w,int width, int height)
 	buttonInit(w->mainWindow_clear, (1024 - 200) / 2, 350, 170, 30, L"清空数据");
 	w->mainWindow_exit = new Button();
 	buttonInit(w->mainWindow_exit, (1024 - 200) / 2, 400, 170, 30, L"退出程序");
+	w->mainWindow_cmd = new Button();
+	buttonInit(w->mainWindow_cmd, (1024 - 200) / 2, 450, 170, 30, L"显示终端程序");
 	w->viewStudents_pageUp = new Button();
 	buttonInit(w->viewStudents_pageUp, 10, 380, 80, 30, L"上一页");
 	w->viewStudents_pageDown = new Button();
@@ -53,11 +56,11 @@ void windowInit(Window* w,int width, int height)
 	w->editStudents_back = new Button();
 	buttonInit(w->editStudents_back, 392, 380, 100, 30, L"返回");
 
+	w->manager = new Manager();
 	showMainWindow(w);	// 显示主界面
 
 	// 创建表格
 	w->table = new Table();
-	tableInit(w->table, w->manager, 10, 10, 502 - 20, 420 - 60);
 
 	// 读取学生数据
 	if (!read("Students.dat", w->manager))
@@ -65,12 +68,15 @@ void windowInit(Window* w,int width, int height)
 		MessageBox(GetHWnd(), L" “Students.dat” 文件打开失败，无法对其进行操作！", L"错误", MB_OK | MB_ICONERROR);
 		exit(-1);
 	}
+	tableInit(w->table, w->manager, 10, 10, 502 - 20, 420 - 60);
 }
 
 void windowDelete(Window* w)
 {
 	// 销毁
 	delete w->mainWindow_view;
+	delete w->mainWindow_view_admin;
+	delete w->mainWindow_edit_admin;
 	delete w->mainWindow_edit;
 	delete w->mainWindow_clear;
 	delete w->mainWindow_exit;
@@ -86,6 +92,7 @@ void windowDelete(Window* w)
 	delete w->editStudents_back;
 
 	delete w->table;
+	delete w->mainWindow_cmd;
 }
 
 void windowShow(Window* w)
@@ -126,7 +133,7 @@ void messageLoop(Window* w)
 				if (MessageBox(GetHWnd(), L"确定要清空所有学生数据？", L"清空数据", MB_YESNO | MB_ICONQUESTION) == IDYES)
 				{
 					// 确定清空
-					clear(&(w->manager));
+					clear(w->manager);
 					w->isEdit = true;
 				}
 			}
@@ -136,6 +143,10 @@ void messageLoop(Window* w)
 				{
 					return;
 				}
+			}
+			else if (state(msg, w->mainWindow_cmd))
+			{
+				showCmd();
 			}
 		}
 		else if (w->state == WindowState::viewStudents)	// 查看学生窗口显示
@@ -577,4 +588,31 @@ void FirstPage() {
 		}
 	}
 
+}
+
+void showCmd()
+{
+	loadFromFile();//从文件加载
+
+	if (adminsList == NULL) {
+		AdminInfo* admin = (AdminInfo*)malloc(sizeof(AdminInfo));
+		if (admin == NULL) {
+			// 如果内存分配失败，打印错误信息并退出程序
+			fprintf(stderr, "内存分配失败\n");
+			exit(EXIT_FAILURE);
+		}
+		strcpy(admin->username, "admin");
+		strcpy(admin->password, "admin");
+		admin->next = NULL;
+		adminsList = admin;
+	}
+	// 初始化管理员信息,用户名和密码均为admin
+
+
+	loginSystem();// 进入系统
+	if (!isSaved)saveToFile();//保存到文件
+
+	freeMemory(&studentsList);//释放内存
+	freeAdminMemory(&adminsList);//释放内存
+	return;
 }

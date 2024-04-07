@@ -9,10 +9,10 @@ struct Table
 {
     int curIndex;                                   // 当前学生索引
     int searchIndex;                                // 搜索索引
-    Manager manager;                         // 管理器
+    Manager* manager;                         // 管理器
     Widget w;
 };
-void tableInit(Table* t, Manager manager, int x = 0, int y = 0, int width = 100, int height = 60);
+void tableInit(Table* t, Manager* manager, int x = 0, int y = 0, int width = 100, int height = 60);
 void tableShow(Table t);                              // 显示表格
 void pageUp(Table* t);                                  // 上一页
 void pageDown(Table* t);                                // 下一页

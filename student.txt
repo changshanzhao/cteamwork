@@ -1,0 +1,25 @@
+##StudentStart##
+StudentID: 12345678张三
+Name: 张三
+Password: 123456
+Grade: 1
+ClassNumber: 1
+GPA: 4.000000
+TotalCredit: 3.50
+QualityGPA: 0.10
+AverageScore: 98.699997
+TotalGPA: 4.100000
+##ScoreStart##
+CourseName: 1
+Score: 98.699997
+Credit: 3.50
+GPA: 4.00
+##ScoreEnd##
+##ProjectStart##
+ProjectName: 1
+GPA: 0.10
+LeaderOrSecondLeader: 1
+ProjectLevel: 国家级
+IsFinished: 1
+##ProjectEnd##
+##StudentEnd##
