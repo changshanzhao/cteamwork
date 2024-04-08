@@ -7,6 +7,7 @@
 #define MAX_PASSWORD_LENGTH 15
 #define STUDENT_ID_LENGTH 8
 #define MAX_CREDIT 8
+#pragma warning(disable:4996)
 // 特定字符串用于读取标记
 #define STUDENT_START "##StudentStart##"
 #define STUDENT_END "##StudentEnd##"
@@ -170,32 +171,6 @@ int isRankValid(int rank);//判断获奖等级是否合法
 int isLeaderOrSecondLeaderValid(int isLeaderOrSecondLeader);//判断是否为负责人是否合法
 void calculateJournalLevel(AcademicPaper* paper);//计算学术论文期刊级别
 
-// 主函数
-int main() {
-    loadFromFile();//从文件加载
-
-    if (adminsList == NULL) {
-        AdminInfo* admin = (AdminInfo*)malloc(sizeof(AdminInfo));
-        if (admin == NULL) {
-            // 如果内存分配失败，打印错误信息并退出程序
-            fprintf(stderr, "内存分配失败\n");
-            exit(EXIT_FAILURE);
-        }
-        strcpy(admin->username, "admin");
-        strcpy(admin->password, "admin");
-        admin->next = NULL;
-        adminsList = admin;
-    }
-    // 初始化管理员信息,用户名和密码均为admin
-
-
-    loginSystem();// 进入系统
-    if (!isSaved)saveToFile();//保存到文件
-
-    freeMemory(&studentsList);//释放内存
-    freeAdminMemory(&adminsList);//释放内存
-    return 0;
-}
 
 // 登录系统
 void loginSystem() {
@@ -337,16 +312,19 @@ void addQualityProject(StudentInfo* student) {
     case 1: {
         InnovationProject* newProject = createInnovationProject();
         insertInnovationProject(student, newProject);
+        printf("大学生创新创业计划项目添加成功。\n");
         break;
     }
     case 2: {
         AcademicPaper* newPaper = createAcademicPaper();
         insertAcademicPaper(student, newPaper);
+        printf("学术论文添加成功。\n");
         break;
     }
     case 3: {
         Competition* newCompetition = createCompetition();
         insertCompetition(student, newCompetition);
+        printf("计算机类学科竞赛添加成功。\n");
         break;
     }
     case 4: {
@@ -1639,11 +1617,11 @@ void saveToFile() {
         fprintf(file, "AverageScore: %f\n", currentStudent->averageScore);// 加权平均分
         fprintf(file, "TotalGPA: %f\n", currentStudent->totalGPA);// 总绩点
 
-        //        char courseName[MAX_NAME_LENGTH];
-        //        float score;    // 分数
-        //        float credit; // 学分
-        //        float gpa; // 单门课程绩点
-                // 学业成绩链表
+//        char courseName[MAX_NAME_LENGTH];
+//        float score;    // 分数
+//        float credit; // 学分
+//        float gpa; // 单门课程绩点
+        // 学业成绩链表
         if (currentStudent->academicScores != NULL) {
             fprintf(file, "%s\n", SCORE_START);
             AcademicScoreNode* currentScore = currentStudent->academicScores;
@@ -2755,7 +2733,6 @@ void sortByGrade(StudentInfo** head) {
         break;
     case 4:
         sortList(&tempList, compareByTotalGPA);
-        displayAllStudents(tempList);
         break;
     case 5:
         return;
@@ -2828,13 +2805,13 @@ void sortByClass(StudentInfo** head) {
         break;
     case 4:
         sortList(&tempList, compareByTotalGPA);
-        displayAllStudents(tempList);
         break;
     case 5:
         return;
     default:
         handleInputError("无效的选项");
     }
+    displayAllStudents(tempList);//显示排序后的学生信息
     freeMemory(&tempList);//释放临时链表的内存
 }
 

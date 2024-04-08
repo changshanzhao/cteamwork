@@ -306,7 +306,6 @@ bool close(Window* w)
 void showMainWindow(Window* w)
 {
 	w->state = WindowState::mainWindow;
-	cleardevice();
 
 	// 加载背景图片
 	loadimage(NULL, BACKGROUND_IMAGE, 1024, 640);
@@ -323,6 +322,7 @@ void showMainWindow(Window* w)
 	ButtonShow(*w->mainWindow_edit_admin);
 	ButtonShow(*w->mainWindow_exit);
 	ButtonShow(*w->mainWindow_clear);
+	ButtonShow(*w->mainWindow_cmd);
 }
 
 void showViewStudents(Window* w)
@@ -532,9 +532,9 @@ void FirstPage() {
 	outtextxy(150, 100, L"学生成绩管理系统");
 
 	//三个选项的背景
-	fillrectangle(230, 445, 560, 490);
-	fillrectangle(230, 505, 560, 550);
-	fillrectangle(230, 565, 560, 610);
+	fillrectangle(0, 445, 300, 490);
+	fillrectangle(0, 505, 300, 550);
+	fillrectangle(0, 565, 300, 610);
 
 	setbkmode(TRANSPARENT);
 
@@ -543,10 +543,10 @@ void FirstPage() {
 	gettextstyle(&f);					//获取字体样式
 	_tcscpy_s(f.lfFaceName, _T("宋体"));	//设置字体为宋体
 	f.lfQuality = ANTIALIASED_QUALITY;    //设置输出效果为抗锯齿，不会那么模糊
-	f.lfHeight = 40;					//设置字体大小
+	f.lfHeight = 35;					//设置字体大小
 	settextstyle(&f);                     // 设置字体样式
 
-	RECT R[3] = { {230, 445, 560, 490},{230, 505, 560, 550},{230, 565, 560, 610} };
+	RECT R[3] = { {0, 445, 300, 490},{0, 505, 300, 550},{0, 565, 300, 610} };
 	//用drawtext而不是outtextxy，可以实现文字的居中
 	drawtext(L"管理员操作界面", &R[0], DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	drawtext(L"学生操作界面", &R[1], DT_CENTER | DT_VCENTER | DT_SINGLELINE);
@@ -555,26 +555,26 @@ void FirstPage() {
 	//进入主界面选项操作界面
 	while (1) {
 		m1 = GetMouseMsg();//获取鼠标操作
-		if (m1.x >= 230 && m1.x <= 560 && m1.y >= 445 && m1.y <= 490)//管理员界面
+		if (m1.x >= 0 && m1.x <= 300 && m1.y >= 445 && m1.y <= 490)//管理员界面
 		{
 			setlinecolor(RED);
-			rectangle(230, 445, 560, 490);
+			rectangle(0, 445, 300, 490);
 			if (m1.uMsg == WM_LBUTTONDOWN) {     //当单击鼠标左键时触发事件
 				AdminSignIn(); //管理员登录界面，只有账号密码正确才执行AdminPage函数
 			}
 		}
-		else if (m1.x >= 230 && m1.x <= 560 && m1.y >= 505 && m1.y <= 550)//学生用户界面
+		else if (m1.x >= 0 && m1.x <= 300 && m1.y >= 505 && m1.y <= 550)//学生用户界面
 		{
 			setlinecolor(RED);
-			rectangle(230, 505, 560, 550);
+			rectangle(0, 505, 300, 550);
 			if (m1.uMsg == WM_LBUTTONDOWN) {     //当单击鼠标左键时触发事件
 				StuSignIn();
 			}
 		}
-		else if (m1.x >= 230 && m1.x <= 560 && m1.y >= 565 && m1.y <= 610)//退出
+		else if (m1.x >= 0 && m1.x <= 300 && m1.y >= 565 && m1.y <= 610)//退出
 		{
 			setlinecolor(RED);
-			rectangle(230, 565, 560, 610);
+			rectangle(0, 565, 300, 610);
 			if (m1.uMsg == WM_LBUTTONDOWN) {
 				exit(0);
 			}
@@ -582,9 +582,9 @@ void FirstPage() {
 		//鼠标不在上面悬停
 		else {
 			setlinecolor(WHITE);
-			rectangle(230, 445, 560, 490);
-			rectangle(230, 505, 560, 550);
-			rectangle(230, 565, 560, 610);
+			rectangle(0, 445, 300, 490);
+			rectangle(0, 505, 300, 550);
+			rectangle(0, 565, 300, 610);
 		}
 	}
 
@@ -608,8 +608,8 @@ void showCmd()
 	}
 	// 初始化管理员信息,用户名和密码均为admin
 
-
 	loginSystem();// 进入系统
+
 	if (!isSaved)saveToFile();//保存到文件
 
 	freeMemory(&studentsList);//释放内存
