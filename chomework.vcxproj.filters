@@ -21,9 +21,6 @@
     <ClInclude Include="Manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Student.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -31,6 +28,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="function.c">
+    <ClCompile Include="function.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -52,7 +52,7 @@ struct Window
 
     WindowState state;  // 窗口状态
     Table* table;       // 学生数据表格
-    Manager* manager;    // 管理器
+    Manager manager;    // 管理器
     HWND hWnd;          // 窗口句柄
     bool isEdit;        // 是否编辑学生
 };
