@@ -40,7 +40,7 @@ void tableShow_stu(Table t)
 	RECT rect;
 
 	// 绘制表头
-	wchar_t header[4][3] = { L"学号", L"姓名", L"班级", L"总分" };	// 表头数据
+	wchar_t header[4][3] = { L"学号", L"姓名", L"班级", L"绩点" };	// 表头数据
 	for (int i = 10, j = 0; i < 490 && j < 4; i += 120, j++)
 	{
 		rect = { i, 10, i + 120, 10 + 30 };
@@ -255,18 +255,23 @@ void showTable(Table t, StudentInfo* index)
 
 	// 输出学生数据
 	wchar_t buffer[10];
-	rect = { 10, 40, 10 + 120, 70 };
+	drawtext(buffer, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	rect = { 10, 40, 10 + 120, 40 + 30 };
+	LPCTSTR lpctstr = ConvertToLPCTSTR(index->studentID);
+	drawtext(lpctstr, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
-	drawtext((LPCTSTR)index->studentID, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	rect = { 130, 40, 130 + 120, 40 + 30 };
+	lpctstr = ConvertToLPCTSTR(index->name);
+	drawtext(lpctstr, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
-	rect = { 130, 40, 130 + 120, 70 };
-	drawtext((LPCTSTR)index->name, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	rect = { 250, 40, 250 + 120, 40 + 30 };
+	_itow_s(index->classNumber, buffer, 10);
+	//lpctstr = ConvertToLPCTSTR(tmp->classNumber);
+	drawtext(buffer, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
-	rect = { 250, 40, 250 + 120, 70 };
-	drawtext(index->classNumber, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-	rect = { 370, 40, 370 + 120, 70 };
-	_itow_s(index->gpa, buffer, 10);
+	rect = { 370, 40, 370 + 120, 40 + 30 };
+	//_itow_s(tmp->gpa, buffer, 10);
+	swprintf(buffer, 20, L"%.2f", index->gpa);
 	drawtext(buffer, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }
 

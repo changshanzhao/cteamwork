@@ -591,7 +591,7 @@ void messageLoop(Window* w)
 			StudentInfo* index = findStudentByID_ui(studentID, w->manager.students);
 			if (index != NULL)
 			{
-				tableShow_stu(*w->table);
+				showTable(*w->table, index);
 			}
 			else
 			{
@@ -640,7 +640,7 @@ void messageLoop(Window* w)
 				StudentInfo* index = findStudentByID_ui(studentID, w->manager.students);
 				if (index != NULL)
 				{
-					tableShow_stu(*w->table);
+					showTable(*w->table, index);
 				}
 				else
 				{
