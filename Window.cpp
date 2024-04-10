@@ -601,11 +601,8 @@ void messageLoop(Window* w)
 		}
 		else if (state(msg, w->editStudents_add) && msg.message != WM_LBUTTONUP)		// 添加学生
 		{
-			char* newname = addStudentAccount_ui(w->manager.students);//需要前端化修改
-			//这里调用的内部函数需要用的w->manager.students作为参数，应该如何实现
-			showEditTable(w->table, newname);
-			int l = sizeofList(w->manager.students);
-			sortList(&(w->manager).students, compareByStudentID, l);
+			addAdminAccount();//需要前端化修改
+			//这里调用的内部函数需要用的w->manager.students作为参数，应该如何实
 			w->isEdit = true;
 
 		}
@@ -649,17 +646,13 @@ void messageLoop(Window* w)
 			}
 			else if (state(msg, w->editStudents_add) && msg.message != WM_LBUTTONUP)		// 添加学生
 			{
-				char* newname = addStudentAccount_ui(w->manager.students);//需要前端化修改
-				//这里调用的内部函数需要用的w->manager.students作为参数，应该如何实现
-				showEditTable(w->table, newname);
-				int l = sizeofList(w->manager.students);
-				sortList(&(w->manager).students, compareByStudentID, l);
+				addStudentAccount();//需要前端化修改
 				w->isEdit = true;
 
 			}
 			else if (state(msg, w->editStudents_delete) && msg.message != WM_LBUTTONUP)	// 删除学生
 			{
-				modifyScoreMenu_ui(w->manager.students);//函数需要修改
+				modifyScoreMenu();//函数需要修改
 				//需要前端化修改
 			}
 			else
@@ -982,6 +975,7 @@ void FirstPage() {
 	(window->manager).students = NULL;
 	(window->manager).admins = NULL;
 	loadFromFile_all(&(window->manager));
+	loadFromFile();//从文件加载
 	initgraph(1024, 640);//窗口大小
 	MOUSEMSG m1;//鼠标操作1
 	cleardevice();

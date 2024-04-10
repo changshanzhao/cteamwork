@@ -1,4 +1,16 @@
 ##StudentStart##
+StudentID: 19221407
+Name: ÕÔöÁ²©
+Password: 123456
+Grade: 2
+ClassNumber: 1
+GPA: 0.000000
+TotalCredit: 0.00
+QualityGPA: 0.00
+AverageScore: 0.000000
+TotalGPA: 0.000000
+##StudentEnd##
+##StudentStart##
 StudentID: 98745632
 Name: ÍõÎå
 Password: 123456
