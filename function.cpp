@@ -507,7 +507,7 @@ void displayAdminMenu(AdminInfo* admin) {
         printf("请选择操作：");
         scanf("%s", choice);
         //判断选择是否合法
-        while (strcmp(choice, "1") != 0 && strcmp(choice, "2") != 0 && strcmp(choice, "3") != 0 && strcmp(choice, "4") != 0 && strcmp(choice, "5") != 0 && strcmp(choice, "6") != 0 && strcmp(choice, "7") != 0 && strcmp(choice, "8") != 0 && strcmp(choice, "9") != 0 && strcmp(choice, "10") != 0) {
+        while (strcmp(choice, "1") != 0 && strcmp(choice, "2") != 0 && strcmp(choice, "3") != 0 && strcmp(choice, "4") != 0 && strcmp(choice, "5") != 0 && strcmp(choice, "6") != 0 && strcmp(choice, "7") != 0 && strcmp(choice, "8") != 0 && strcmp(choice, "9") != 0 && strcmp(choice, "10") != 0 && strcmp(choice, "11") != 0) {
             handleInputError("选项应为1-10之间的数，请重新输入。\n");
             scanf("%s", choice);
         }
