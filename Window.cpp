@@ -1,7 +1,7 @@
 #include "Window.h"
 #include <graphics.h>
 #include "function.h"
-
+int flag = 0;
 void windowInit(Window* w,int width, int height)
 {
 	cleardevice();
@@ -44,9 +44,11 @@ void windowInit(Window* w,int width, int height)
 	w->viewStudents_pageDown = new Button();
 	buttonInit(w->viewStudents_pageDown, 210, 380, 80, 30, L"下一页");
 	w->viewStudents_back = new Button();
-	buttonInit(w->viewStudents_back, 412, 380, 80, 30, L"返回");
+	buttonInit(w->viewStudents_back, 210, 430, 80, 30, L"返回");
 	w->viewStudents_sort = new Button();
-	buttonInit(w->viewStudents_sort, 300, 380, 102, 30, L"按总分排序");
+	buttonInit(w->viewStudents_sort, 10, 430, 120, 30, L"按总分排序");
+	w->viewAdmins_sort = new Button();
+	buttonInit(w->viewAdmins_sort, 10, 430, 180, 30, L"按账号正序排序");
 	w->editStudents_search = new Button();
 	buttonInit(w->editStudents_search, 10, 380, 100, 30, L"搜索学生");
 	w->editStudents_add = new Button();
@@ -54,7 +56,7 @@ void windowInit(Window* w,int width, int height)
 	w->editStudents_delete = new Button();
 	buttonInit(w->editStudents_delete, 264, 380, 100, 30, L"删除学生");
 	w->editStudents_back = new Button();
-	buttonInit(w->editStudents_back, 392, 380, 100, 30, L"返回");
+	buttonInit(w->editStudents_back, 210, 430, 80, 30, L"返回");
 
 	showMainWindow(w);	// 显示主界面
 
@@ -452,11 +454,7 @@ void messageLoop(Window* w)
 			{
 				showViewStudents(w);
 			}
-			else if (state(msg, w->mainWindow_edit_admin))	// 编辑学生
-			{
-				showEditAdmins(w);
-			}
-			else if (state(msg, w->mainWindow_view_admin))	// 编辑学生
+			else if (state(msg, w->mainWindow_view_admin))	// 查看管理员
 			{
 				showViewAdmins(w);
 			}
@@ -464,6 +462,12 @@ void messageLoop(Window* w)
 			{
 				showEditStudents(w);
 			}
+			else if (state(msg, w->mainWindow_edit_admin))	// 编辑管理员
+			{
+				showEditAdmins(w);
+			}
+			
+			
 			else if (state(msg, w->mainWindow_clear))	// 清空数据
 			{
 				if (MessageBox(GetHWnd(), L"确定要清空所有学生数据？", L"清空数据", MB_YESNO | MB_ICONQUESTION) == IDYES)
@@ -512,7 +516,7 @@ void messageLoop(Window* w)
 			{
 				if (w->viewStudents_sort->text == L"按总分排序")
 				{
-					int l = sizeofList(w->manager.students);
+					int l = sizeofList_stu(w->manager.students);
 					sortList(&((w->manager).students), compareByGPA, l);
 					tableShow_stu(*w->table);
 					w->viewStudents_sort->text = L"按学号排序";
@@ -520,7 +524,7 @@ void messageLoop(Window* w)
 				}
 				else
 				{
-					int l = sizeofList(w->manager.students);
+					int l = sizeofList_stu(w->manager.students);
 					sortList(&(w->manager).students, compareByStudentID, l);
 					tableShow_stu(*w->table);
 					w->viewStudents_sort->text = L"按总分排序";
@@ -532,7 +536,7 @@ void messageLoop(Window* w)
 				continue;
 			}
 		}
-		else if (w->state == WindowState::viewAdmins)	// 查看学生窗口显示
+		else if (w->state == WindowState::viewAdmins)	// 查看管理员窗口显示
 		{
 			if (state(msg, w->viewStudents_pageUp) && msg.message != WM_LBUTTONUP)			// 上一页
 			{
@@ -547,23 +551,23 @@ void messageLoop(Window* w)
 				// 显示主窗口
 				showMainWindow(w);
 			}
-			else if (state(msg, w->viewStudents_sort) && msg.message != WM_LBUTTONUP)	// 排序
+			else if (state(msg, w->viewAdmins_sort) && msg.message != WM_LBUTTONUP)	// 排序
 			{
-				if (w->viewStudents_sort->text == L"按总分排序")
+				if (w->viewAdmins_sort->text == L"按账号正序排序")
 				{
-					int l = sizeofList(w->manager.students);
-					sortList(&((w->manager).students), compareByGPA, l);
-					tableShow_stu(*w->table);
-					w->viewStudents_sort->text = L"按学号排序";
-					state(msg, w->viewStudents_sort);
+					int l = sizeofList_admin(w->manager.admins);
+					sortList_admin(&((w->manager).admins), compareByAdminID, l);
+					tableShow_admin(*w->table);
+					w->viewAdmins_sort->text = L"按账号逆序排序";
+					state(msg, w->viewAdmins_sort);
 				}
 				else
 				{
-					int l = sizeofList(w->manager.students);
-					sortList(&(w->manager).students, compareByStudentID, l);
-					tableShow_stu(*w->table);
-					w->viewStudents_sort->text = L"按总分排序";
-					state(msg, w->viewStudents_sort);
+					int l = sizeofList_admin(w->manager.admins);
+					sortList_admin(&((w->manager).admins), compareByAdminID_inv, l);
+					tableShow_admin(*w->table);
+					w->viewAdmins_sort->text = L"按账号正序排序";
+					state(msg, w->viewAdmins_sort);
 				}
 			}
 			else
@@ -677,7 +681,7 @@ bool close(Window* w)
 		if (id == IDYES)
 		{
 			// 写入学生数据
-			int l = sizeofList(w->manager.students);
+			int l = sizeofList_stu(w->manager.students);
 			sortList(&((w->manager).students), compareByStudentID, l);
 			saveToFile_ui((w->manager).students);
 			closegraph();
@@ -743,7 +747,7 @@ void showViewAdmins(Window* w)
 	ButtonShow(w->viewStudents_pageUp);
 	ButtonShow(w->viewStudents_pageDown);
 	ButtonShow(w->viewStudents_back);
-	ButtonShow(w->viewStudents_sort);
+	ButtonShow(w->viewAdmins_sort);
 }
 
 void showEditStudents(Window* w)
@@ -844,9 +848,6 @@ void AdminSignIn() {
 
 
 
-
-
-
 	wchar_t ReceAcctpassword[30]{ L"admin" }; //记录输入的密码字符串
 	TCHAR InputPass[] = _T("请输入密码");
 	InputBox(ReceAcctpassword, 30, InputPass);
@@ -874,6 +875,7 @@ void AdminSignIn() {
 
 	//如果用户名和密码都正确才进度到管理员界面，否则弹窗提示错误
 	if (strcmp(tmp1->username, ReceAcctNumber_s) == 0 && strcmp(tmp1->password, ReceAcctpassword_s) == 0) {
+		flag = 1;
 		cleardevice();
 		//window = new Window;
 		windowInit(window, 1024, 640);
@@ -887,7 +889,7 @@ void AdminSignIn() {
 		HWND SignError = GetHWnd();
 		int isok = MessageBox(SignError, L"用户名或密码错误!", L"提示", MB_OK);
 	}
-	exit(0);
+	//exit(0);
 }
 
 //学生登录
@@ -954,6 +956,7 @@ void StuSignIn() {
 
 	//如果用户名和密码都正确才进度到管理员界面，否则弹窗提示错误
 	if (strcmp(tmp1->studentID, ReceAcctNumber_s) == 0 && strcmp(tmp1->password, ReceAcctpassword_s) == 0) {
+		flag = 1;
 		cleardevice();
 		windowInit(window, 1024, 640);
 		windowShow(window);
@@ -966,7 +969,7 @@ void StuSignIn() {
 		HWND SignError = GetHWnd();
 		int isok = MessageBox(SignError, L"用户名或密码错误!", L"提示", MB_OK);
 	}
-	exit(0);
+	//exit(0);
 }
 //首页
 void FirstPage() {
@@ -1019,7 +1022,6 @@ void FirstPage() {
 			rectangle(0, 445, 300, 490);
 			if (m1.uMsg == WM_LBUTTONDOWN) {     //当单击鼠标左键时触发事件
 				AdminSignIn(); //管理员登录界面，只有账号密码正确才执行AdminPage函数
-				break;
 			}
 		}
 		else if (m1.x >= 0 && m1.x <= 300 && m1.y >= 505 && m1.y <= 550)//学生用户界面
@@ -1028,7 +1030,6 @@ void FirstPage() {
 			rectangle(0, 505, 300, 550);
 			if (m1.uMsg == WM_LBUTTONDOWN) {     //当单击鼠标左键时触发事件
 				StuSignIn();
-				break;
 			}
 		}
 		else if (m1.x >= 0 && m1.x <= 300 && m1.y >= 565 && m1.y <= 610)//退出
@@ -1045,6 +1046,10 @@ void FirstPage() {
 			rectangle(0, 445, 300, 490);
 			rectangle(0, 505, 300, 550);
 			rectangle(0, 565, 300, 610);
+		}
+		if (flag == 1) 
+		{
+			break;
 		}
 	}
 

@@ -35,7 +35,8 @@ void sortByScore(Manager M);									// 按总分排序
 const struct StudentInfo* getStudent(int index, Manager M);			// 获取学生数据
 void setStudent(int index, const struct StudentInfo* student, Manager M);	// 修改学生
 void deleteStudent(int index, Manager M);						// 删除学生
-int sizeofList(StudentInfo* studentList);
+int sizeofList_stu(StudentInfo* studentList);
+int sizeofList_admin(AdminInfo* adminList);
 int size(Manager M);// 学生数量
 int searchName(char* searchTerms, Manager M);		// 按姓名搜索学生
 int searchId(char* id, Manager M);							// 按学号搜索学生

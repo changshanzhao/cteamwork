@@ -1,14 +1,72 @@
 ##StudentStart##
-StudentID: 19221407
-Name: 赵隽博
+StudentID: 22222222
+Name: 李八
 Password: 123456
-Grade: 2
-ClassNumber: 1
+Grade: 4
+ClassNumber: 22
 GPA: 0.000000
 TotalCredit: 0.00
 QualityGPA: 0.00
 AverageScore: 0.000000
 TotalGPA: 0.000000
+##StudentEnd##
+##StudentStart##
+StudentID: 12345678
+Name: 张三
+Password: 123456
+Grade: 2
+ClassNumber: 1
+GPA: 4.000000
+TotalCredit: 7.00
+QualityGPA: 0.10
+AverageScore: 97.599991
+TotalGPA: 4.100000
+##ScoreStart##
+CourseName: 微积分A1
+Score: 98.699997
+Credit: 3.50
+GPA: 4.00
+CourseName: 微积分A2
+Score: 96.500000
+Credit: 3.50
+GPA: 4.00
+##ScoreEnd##
+##ProjectStart##
+ProjectName: 深度强化学习
+GPA: 0.10
+LeaderOrSecondLeader: 1
+ProjectLevel: 国家级
+IsFinished: 1
+##ProjectEnd##
+##StudentEnd##
+##StudentStart##
+StudentID: 23456789
+Name: 李四
+Password: 123456
+Grade: 2
+ClassNumber: 1
+GPA: 4.000000
+TotalCredit: 7.00
+QualityGPA: 0.20
+AverageScore: 93.349991
+TotalGPA: 4.200000
+##ScoreStart##
+CourseName: 线性代数
+Score: 91.199997
+Credit: 3.50
+GPA: 4.00
+CourseName: 程序设计基础
+Score: 95.500000
+Credit: 3.50
+GPA: 4.00
+##ScoreEnd##
+##PaperStart##
+Title: 无人机
+JournalName: CCF-A期刊
+IsFirstAuthor: 1
+JournalLevel: 2
+GPA: 0.20
+##PaperEnd##
 ##StudentEnd##
 ##StudentStart##
 StudentID: 98745632
@@ -41,60 +99,50 @@ GPA: 0.00
 ##CompetitionEnd##
 ##StudentEnd##
 ##StudentStart##
-StudentID: 23456789
-Name: 李四
+StudentID: 19221407
+Name: 赵隽博
 Password: 123456
 Grade: 2
 ClassNumber: 1
-GPA: 4.000000
-TotalCredit: 7.00
-QualityGPA: 0.20
-AverageScore: 93.349991
-TotalGPA: 4.200000
-##ScoreStart##
-CourseName: 线性代数
-Score: 91.199997
-Credit: 3.50
-GPA: 4.00
-CourseName: 程序设计基础
-Score: 95.500000
-Credit: 3.50
-GPA: 4.00
-##ScoreEnd##
-##PaperStart##
-Title: 无人机
-JournalName: CCF-A期刊
-IsFirstAuthor: 1
-JournalLevel: 2
-GPA: 0.20
-##PaperEnd##
+GPA: 0.000000
+TotalCredit: 0.00
+QualityGPA: 0.00
+AverageScore: 0.000000
+TotalGPA: 0.000000
 ##StudentEnd##
 ##StudentStart##
-StudentID: 12345678
-Name: 张三
+StudentID: 11111111
+Name: 朱重八
 Password: 123456
 Grade: 2
-ClassNumber: 1
+ClassNumber: 11
 GPA: 4.000000
-TotalCredit: 7.00
-QualityGPA: 0.10
-AverageScore: 97.599991
-TotalGPA: 4.100000
+TotalCredit: 3.00
+QualityGPA: 0.00
+AverageScore: 93.000000
+TotalGPA: 4.000000
 ##ScoreStart##
-CourseName: 微积分A1
-Score: 98.699997
-Credit: 3.50
-GPA: 4.00
-CourseName: 微积分A2
-Score: 96.500000
+CourseName: 高等数学
+Score: 93.000000
 Credit: 3.50
 GPA: 4.00
 ##ScoreEnd##
-##ProjectStart##
-ProjectName: 深度强化学习
-GPA: 0.10
-LeaderOrSecondLeader: 1
-ProjectLevel: 国家级
-IsFinished: 1
-##ProjectEnd##
+##StudentEnd##
+##StudentStart##
+StudentID: 33333333
+Name: 陈六
+Password: 123456
+Grade: 1
+ClassNumber: 33
+GPA: 0.000000
+TotalCredit: 3.00
+QualityGPA: 0.00
+AverageScore: 33.000000
+TotalGPA: 0.000000
+##ScoreStart##
+CourseName: 程序设计导论
+Score: 33.000000
+Credit: 3.00
+GPA: 0.00
+##ScoreEnd##
 ##StudentEnd##

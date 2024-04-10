@@ -45,7 +45,7 @@ struct Window
     Button* editStudents_delete;
     Button* editStudents_back;
     Button* editStudents_search;
-
+    Button* viewAdmins_sort;
 
 
     Widget wid;

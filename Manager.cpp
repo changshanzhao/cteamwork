@@ -388,11 +388,24 @@ void loadFromFile_all(Manager* M) {
 //}
 
 
-int sizeofList(StudentInfo* studentList)
+int sizeofList_stu(StudentInfo* studentList)
 {
     // TODO: 在此处插入 return 语句
     int a = 0;
     StudentInfo* tmp = studentList;
+    while (tmp != NULL)
+    {
+        a++;
+        tmp = tmp->next;
+
+    }
+    return a;
+}
+int sizeofList_admin(AdminInfo* adminList)
+{
+    // TODO: 在此处插入 return 语句
+    int a = 0;
+    AdminInfo* tmp = adminList;
     while (tmp != NULL)
     {
         a++;

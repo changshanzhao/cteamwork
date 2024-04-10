@@ -132,8 +132,11 @@ void displayAllStudents(StudentInfo* head);//显示所有学生信息概况
 void displayByClass(StudentInfo* head);//按班级显示学生信息
 void displayByGrade(StudentInfo* head);//按年级显示学生信息
 void sortList(StudentInfo** headref, int (*compare)(const StudentInfo*, const StudentInfo*), int l);//排序学生链表
+void sortList_admin(AdminInfo** headRef, int (*compare)(const AdminInfo*, const AdminInfo*), int l);//排序管理员链表
 int compareByStudentID(const StudentInfo* a, const StudentInfo* b);//按学号排序
 int compareByGPA(const StudentInfo* a, const StudentInfo* b);//按学业GPA排序
+int compareByAdminID(const AdminInfo* a, const AdminInfo* b);//按管理员账号正序排序
+int compareByAdminID_inv(const AdminInfo* a, const AdminInfo* b);//按管理员账号逆序排序
 int compareByAverageScore(const StudentInfo* a, const StudentInfo* b);//按加权平均分排序
 int compareByTotalGPA(const StudentInfo* a, const StudentInfo* b);//按总绩点排序
 void addAdminAccount();//添加管理员账号

@@ -1572,9 +1572,46 @@ void sortList(StudentInfo** headRef, int (*compare)(const StudentInfo*, const St
     }
 }
 
+//排序管理员链表
+void sortList_admin(AdminInfo** headRef, int (*compare)(const AdminInfo*, const AdminInfo*), int l) {
+    // 使用冒泡排序对管理员链表进行排序
+    int i, j;
+    AdminInfo* current;
+    AdminInfo* next;
+    for (i = 0; i < l - 1; i++) {
+        current = *headRef;
+        next = current->next;
+        for (j = 0; j < l - i - 1; j++) {
+            if (compare(current, next) > 0) {
+                // 交换两个节点的数据
+                char tmpID[MAX_NAME_LENGTH + 1];
+                strcpy(tmpID, current->username);
+                strcpy(current->username, next->username);
+                strcpy(next->username, tmpID);
+
+                char tmpPassword[MAX_PASSWORD_LENGTH + 2];
+                strcpy(tmpPassword, current->password);
+                strcpy(current->password, next->password);
+                strcpy(next->password, tmpPassword);
+            }
+            current = current->next;
+            next = next->next;
+        }
+    }
+}
+
 // 比较函数：按学号排序
 int compareByStudentID(const StudentInfo* a, const StudentInfo* b) {
     return strcmp(a->studentID, b->studentID);
+}
+
+// 比较函数：按管理员账号正序排序
+int compareByAdminID(const AdminInfo* a, const AdminInfo* b) {
+    return strcmp(a->username, b->username);
+}
+// 比较函数：按管理员账号逆序排序
+int compareByAdminID_inv(const AdminInfo* a, const AdminInfo* b) {
+    return strcmp(b->username, a->username);
 }
 
 // 比较函数：按学业GPA排序

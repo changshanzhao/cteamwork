@@ -98,10 +98,7 @@ void tableShow_admin(Table t)
 	fillrectangle(t.w.x, t.w.y, t.w.x + t.w.width, t.w.y + t.w.height);
 
 	// 画竖线
-	for (int i = 130; i <= 370; i += 120)
-	{
-		line(i, 10, i, 10 + 360);
-	}
+	line(250, 10, 250, 10 + 360);
 
 	// 画横线
 	for (int j = 40; j <= 340; j += 30)
@@ -113,7 +110,7 @@ void tableShow_admin(Table t)
 
 	// 绘制表头
 	wchar_t header[2][3] = { L"账号", L"密码" };	// 表头数据
-	for (int i = 10, j = 0; i < 490 && j < 2; i += 120, j++)
+	for (int i = 10, j = 0; i < 490 && j < 2; i += 240, j++)
 	{
 		rect = { i, 10, i + 240, 10 + 30 };
 		drawtext(header[j], &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
@@ -126,12 +123,12 @@ void tableShow_admin(Table t)
 	{
 		if (tmp != NULL)	// 在不超出索引范围的情况下才读取数据
 		{
-			rect = { 10, j, 10 + 120, j + 30 };
+			rect = { 10, j, 10 + 240, j + 30 };
 			LPCTSTR lpctstr = ConvertToLPCTSTR(tmp->username);
 			drawtext(lpctstr, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
 			lpctstr = ConvertToLPCTSTR(tmp->password);
-			rect = { 250, j, 250 + 120, j + 30 };
+			rect = { 250, j, 250 + 240, j + 30 };
 			drawtext(lpctstr, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
 
