@@ -402,13 +402,15 @@ void modifyScoreMenu() {
             }
             else if (strcmp(choice, "7") == 0) {
                 deleteStudentRecord(&studentsList, studentID);
+                student = NULL;
                 printf("学生删除成功。\n");
+                return;
             }
             else if (strcmp(choice, "8") == 0) {
                 printf("返回。\n");
             }
             // 更新GPA、总学分、加权平均分、总绩点
-            calculateAcademics(student);
+            if(student!=NULL)calculateAcademics(student);
             printf("成绩修改成功。\n");
         } while (strcmp(choice, "8") != 0);
     }
@@ -535,7 +537,12 @@ void displayAdminMenu(AdminInfo* admin) {
                 scanf("%s", studentID);
             }
             StudentInfo* student = findStudentByID(studentID);
-            displayStudentInfo(student);
+            if (student != NULL) {
+                displayStudentInfo(student);
+            }
+            else {
+                printf("未找到学生信息。\n");
+            }
         }
         else if (strcmp(choice, "8") == 0) {
             saveToFile();
@@ -545,7 +552,7 @@ void displayAdminMenu(AdminInfo* admin) {
         }
         else if (strcmp(choice, "10") == 0) {
             char newPassword[MAX_PASSWORD_LENGTH];
-            printf("请输入新密码：");
+            printf("请输入新密码：(不超过15位)");
             scanf("%s", newPassword);
             //判断密码长度是否合法
             while (!isPasswordValid(newPassword)) {
@@ -601,7 +608,6 @@ void displaySelfMenu(StudentInfo* student) {
         }
         else if (strcmp(choice, "5") == 0) {
             printf("学生退出登录。\n");
-            return;
         }
         else if (strcmp(choice, "3") == 0) {
             displayRank(student);
@@ -2677,8 +2683,9 @@ void displayByGrade(StudentInfo* head) {
             printf("学号: %s, 姓名: %s, 班级: %d\n学业GPA: %f, 已获总学分: %.2f, 素质项目加分GPA: %.2f, 加权平均分: %f, 综合GPA: %.2f\n\n",
                 current->studentID, current->name, current->classNumber, current->gpa, current->totalCredit,
                 current->qualityGpa, current->averageScore, current->totalGPA);
-            current = current->next;
+            
         }
+        current = current->next;
     }
 }
 

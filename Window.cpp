@@ -171,6 +171,7 @@ void modifyScoreMenu_ui(StudentInfo* studentList) {
 		case 5:
 			// 删除学生
 			deleteStudentRecord(&studentsList, studentID);
+			student = NULL;
 			break;
 		case 6:
 			printf("返回。\n");
@@ -180,7 +181,7 @@ void modifyScoreMenu_ui(StudentInfo* studentList) {
 			printf("无效的选项。\n");
 		}
 		// 更新GPA、总学分、加权平均分、总绩点
-		calculateGPA(student);
+		if(student!=NULL)calculateGPA(student);
 		printf("成绩修改成功。\n");
 	}
 	else {
@@ -483,6 +484,7 @@ void messageLoop(Window* w)
 				{
 					if (close(w))
 					{
+						exit(0);
 						return;
 					}
 				}
@@ -491,6 +493,7 @@ void messageLoop(Window* w)
 			else if (state(msg, w->mainWindow_cmd))
 			{
 				showCmd();
+				
 			}
 			else
 			{

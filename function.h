@@ -170,7 +170,11 @@ int isRankValid(int rank);//判断获奖等级是否合法
 int isLeaderOrSecondLeaderValid(int isLeaderOrSecondLeader);//判断是否为负责人是否合法
 void calculateJournalLevel(AcademicPaper* paper);//计算学术论文期刊级别
 void freeTmpMemory(StudentInfo** head);//释放临时学业成绩内存
-
+void displayRank(StudentInfo* student);//学生查看年级、班级排名
+void displayClassRank(StudentInfo* student);//学生查看班级排名
+void displayGradeRank(StudentInfo* student);//学生查看年级排名
+int compareByQualityGPA(const StudentInfo* a, const StudentInfo* b);//按素质加分GPA排序
+void displayAllQualityProjects(StudentInfo* head);//显示所有学生的素质加分项目
 
 extern StudentInfo* studentsList;
 extern AdminInfo* adminsList;
