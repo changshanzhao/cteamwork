@@ -198,7 +198,7 @@ void loginSystem() {
 
 // 学生登录
 void studentLogin() {
-    char studentID[STUDENT_ID_LENGTH], password[MAX_PASSWORD_LENGTH];
+    char studentID[STUDENT_ID_LENGTH+1], password[MAX_PASSWORD_LENGTH];
     printf("请输入学号：\n");
     scanf("%s", studentID);//输入学号
     //判断学号是否存在
@@ -220,8 +220,7 @@ void studentLogin() {
         printf("学生登录成功。\n");
         // 显示学生菜单
         displaySelfMenu(student);
-    }
-    else {
+    }else {
         // 登录失败
         printf("学号或密码错误。\n");
         count++;
@@ -338,7 +337,7 @@ void addQualityProject(StudentInfo* student) {
 
 // 编辑学生成绩或删除学生
 void modifyScoreMenu() {
-    char studentID[STUDENT_ID_LENGTH];
+    char studentID[STUDENT_ID_LENGTH+1];
     printf("请输入学生学号: ");
     scanf("%s", studentID);
     //判断学号是否合法
@@ -527,7 +526,7 @@ void displayAdminMenu(AdminInfo* admin) {
             displayStudentMenu();
         }
         else if (strcmp(choice, "7") == 0) {
-            char studentID[STUDENT_ID_LENGTH];
+            char studentID[STUDENT_ID_LENGTH+1];
             printf("请输入学生学号: ");
             scanf("%s", studentID);
             //判断学号是否合法
@@ -602,11 +601,12 @@ void displaySelfMenu(StudentInfo* student) {
         }
         else if (strcmp(choice, "5") == 0) {
             printf("学生退出登录。\n");
+            return;
         }
         else if (strcmp(choice, "3") == 0) {
             displayRank(student);
         }
-    } while (strcmp(choice, "4") != 0);
+    } while (strcmp(choice, "5") != 0);
 }
 
 // 释放学生内存
